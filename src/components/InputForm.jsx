@@ -5,20 +5,32 @@ export default function InputForm() {
     firstName: "",
     lastName: "",
     email: "",
+    comments: "",
+    isAccepted: true,
+    status: "",
+    favColor: ""
   });
 
   function handleChange(event) {
+    console.log(formData)
+    const { name, value, checked, type } = event.target
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [event.target.name]: event.target.value,
+        [name]: type === "checkbox" ? checked : value
       };
     });
   }
 
+  function handleSubmit(event) {
+    event.preventDefault()
+    console.log(formData)
+  }
+
   return (
     <>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
+        <h2>Welcome</h2>
         <input
           type="text"
           placeholder="First Name"
@@ -40,10 +52,75 @@ export default function InputForm() {
           name="email"
           value={formData.email}
         />
+        <textarea
+          name="comments"
+          value={formData.comments}
+          onChange={handleChange}
+        />
+        <div className="radio-list">
+          <div className="radio-item">
+            <input
+              type="radio"
+              id="single"
+              name="status"
+              value="single"
+              checked={formData.status === "single"}
+              onChange={handleChange}
+            />
+            <label htmlFor="single">single</label>
+          </div>
+
+          <div className="radio-item">
+            <input
+              type="radio"
+              id="married"
+              name="status"
+              value="married"
+              checked={formData.status === "married"}
+              onChange={handleChange}
+            />
+            <label htmlFor="married">married</label>
+          </div>
+
+        </div>
+
+
+
+
+        <label htmlFor="favColor" className="favColor-text">What is your favorite color?</label>
+        <br />
+        <select
+          id="favColor"
+          value={formData.favColor}
+          onChange={handleChange}
+          name="favColor"
+
+        >
+          <option value="">select</option>
+          <option value="red">Red</option>
+          <option value="orange">Orange</option>
+          <option value="yellow">Yellow</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+          <option value="indigo">Indigo</option>
+          <option value="violet">Violet</option>
+        </select>
+
+        <div className="terms">
+          <input
+            className="checkbox"
+            type="checkbox"
+            onChange={handleChange}
+            name="isAccepted"
+            id="isAccepted"
+            checked={formData.isAccepted}
+
+          />
+          <label htmlFor="isAccepted">Accept Terms and Condition</label>
+        </div>
+        <button>Submit</button>
       </form>
-      <h2> {formData.firstName}</h2>
-      <h2> {formData.lastName}</h2>
-      <h2> {formData.email}</h2>
+
     </>
   );
 }
