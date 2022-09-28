@@ -2,7 +2,7 @@ import React from "react";
 
 
 export default function InputForm() {
-  const [formData, setFormData] = React.useState(JSON.parse(localStorage.getItem("notes"))
+  const [formData, setFormData] = React.useState(() =>JSON.parse(localStorage.getItem("notes"))
     || {
     firstName: "",
     lastName: "",
