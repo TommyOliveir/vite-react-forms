@@ -1,7 +1,9 @@
 import React from "react";
 
+
 export default function InputForm() {
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = React.useState(JSON.parse(localStorage.getItem("notes"))
+    || {
     firstName: "",
     lastName: "",
     email: "",
@@ -10,6 +12,10 @@ export default function InputForm() {
     status: "",
     favColor: ""
   });
+
+  React.useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(formData))
+  }, [formData])
 
   function handleChange(event) {
     console.log(formData)
@@ -120,7 +126,7 @@ export default function InputForm() {
         </div>
         <button>Submit</button>
       </form>
-
+      name: {formData.firstName}
     </>
   );
 }
